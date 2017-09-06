@@ -14,6 +14,7 @@
 		279BF7691F5E697E00EA9078 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279BF7671F5E697E00EA9078 /* Main.storyboard */; };
 		279BF76B1F5E697E00EA9078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279BF76A1F5E697E00EA9078 /* Assets.xcassets */; };
 		279BF76E1F5E697E00EA9078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279BF76C1F5E697E00EA9078 /* LaunchScreen.storyboard */; };
+		27CCDB431F5FD28400E1F74A /* TouchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CCDB421F5FD28400E1F74A /* TouchScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		279BF76A1F5E697E00EA9078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		279BF76D1F5E697E00EA9078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		279BF76F1F5E697E00EA9078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27CCDB421F5FD28400E1F74A /* TouchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				279BF76C1F5E697E00EA9078 /* LaunchScreen.storyboard */,
 				279BF76F1F5E697E00EA9078 /* Info.plist */,
 				277EF58C1F5E984200A6FC14 /* Furniture.swift */,
+				27CCDB421F5FD28400E1F74A /* TouchScrollView.swift */,
 			);
 			path = ARKitFurnitureArrangementSample;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				279BF7661F5E697E00EA9078 /* ViewController.swift in Sources */,
+				27CCDB431F5FD28400E1F74A /* TouchScrollView.swift in Sources */,
 				277EF58D1F5E984200A6FC14 /* Furniture.swift in Sources */,
 				279BF7621F5E697E00EA9078 /* AppDelegate.swift in Sources */,
 			);

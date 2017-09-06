@@ -1,27 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A278a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <arscnView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="BrB-h1-WRS">
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="ARKitFurnitureArrangementSample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qeG-jC-HSq" customClass="ARSCNView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </arscnView>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ird-Hi-0Uk">
+                                <rect key="frame" x="0.0" y="320" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfJ-FY-Jio">
+                                        <rect key="frame" x="165.5" y="0.0" width="45" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="mfj-KE-78H"/>
+                                        </constraints>
+                                        <state key="normal" image="open"/>
+                                        <connections>
+                                            <action selector="menuButtonTapperd:" destination="BV1-FR-VrT" eventType="touchUpInside" id="XyW-C3-Lym"/>
+                                        </connections>
+                                    </button>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEx-HU-JhM" customClass="TouchScrollView" customModule="ARKitFurnitureArrangementSample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="217"/>
+                                    </scrollView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="yfJ-FY-Jio" firstAttribute="top" secondItem="ird-Hi-0Uk" secondAttribute="top" id="2HX-pW-Qai"/>
+                                    <constraint firstItem="yfJ-FY-Jio" firstAttribute="centerX" secondItem="ird-Hi-0Uk" secondAttribute="centerX" id="5ZR-oC-xmm"/>
+                                    <constraint firstItem="VEx-HU-JhM" firstAttribute="leading" secondItem="ird-Hi-0Uk" secondAttribute="leading" id="Na5-vl-qTo"/>
+                                    <constraint firstItem="VEx-HU-JhM" firstAttribute="top" secondItem="yfJ-FY-Jio" secondAttribute="bottom" constant="20" id="UZv-NS-pab"/>
+                                    <constraint firstAttribute="trailing" secondItem="VEx-HU-JhM" secondAttribute="trailing" id="huS-Qj-ns6"/>
+                                    <constraint firstAttribute="bottom" secondItem="VEx-HU-JhM" secondAttribute="bottom" constant="400" id="uNi-Jn-Fsm"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32175391720000002" green="0.79563398210000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ird-Hi-0Uk" firstAttribute="height" secondItem="qeG-jC-HSq" secondAttribute="height" id="1W6-xM-gSw"/>
+                            <constraint firstItem="ird-Hi-0Uk" firstAttribute="trailing" secondItem="fcb-cN-hrH" secondAttribute="trailing" id="nKa-AJ-UVR"/>
+                            <constraint firstItem="ird-Hi-0Uk" firstAttribute="top" secondItem="fcb-cN-hrH" secondAttribute="top" constant="300" id="oJz-Q7-2uD"/>
+                            <constraint firstItem="ird-Hi-0Uk" firstAttribute="leading" secondItem="fcb-cN-hrH" secondAttribute="leading" id="q06-bC-KJD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fcb-cN-hrH"/>
+                    </view>
                     <connections>
-                        <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="menuButton" destination="yfJ-FY-Jio" id="aUB-nn-jFI"/>
+                        <outlet property="menuView" destination="ird-Hi-0Uk" id="c39-0U-VAe"/>
+                        <outlet property="sceneView" destination="qeG-jC-HSq" id="Ili-7Y-fqa"/>
+                        <outlet property="scrollView" destination="VEx-HU-JhM" id="AFe-3A-gzn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="36" y="33.733133433283363"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="open" width="45" height="45"/>
+    </resources>
 </document>
