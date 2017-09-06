@@ -12,10 +12,10 @@ import ARKit
 
 class Furniture {
     
-    static func create(sceneName: String, nodeName: String, width: CGFloat) -> SCNNode {
+    static func create(sceneName: String, width: CGFloat) -> SCNNode {
         // シーンからノードを取り出す
         let scene = SCNScene(named: sceneName)!
-        let node = scene.rootNode.childNode(withName: nodeName, recursively: true)
+        let node = scene.rootNode.childNode(withName: "sofa", recursively: true)
 
         // 縮尺を計算してスケールを調整する
         let (min, max) = (node?.boundingBox)!

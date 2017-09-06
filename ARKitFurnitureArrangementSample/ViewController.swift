@@ -48,23 +48,19 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         initializeMenu()
         
         self.recordingButto = RecordingButton(self) // 録画ボタン
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-        
-        // Run the view's session
+        configuration.planeDetection = .horizontal // 平面の検出を有効化する
         sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Pause the view's session
         sceneView.session.pause()
     }
     
@@ -72,31 +68,30 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+        DispatchQueue.main.async {
+            if let planeAnchor = anchor as? ARPlaneAnchor {
+                // 平面を表現するノードを追加する
+                let panelNode = PlaneNode(anchor: planeAnchor)
+                panelNode.isDisplay = true
+                
+                node.addChildNode(panelNode)
+                self.planeNodes.append(panelNode)
+            }
+        }
     }
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
+    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         
+        DispatchQueue.main.async {
+            if let planeAnchor = anchor as? ARPlaneAnchor, let planeNode = node.childNodes[0] as? PlaneNode {
+                // ノードの位置及び形状を修正する
+                planeNode.update(anchor: planeAnchor)
+            }
+        }
     }
     
     // MAEK: - Menu View
@@ -112,14 +107,9 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
                 self.menuView.frame.origin.y = UIScreen.main.bounds.height - 50
             })
         } else {
-            if sofaNode != nil {
-                sofaNode?.removeFromParentNode()
-            }
-            
             for imageView in scrollView.subviews {
                 imageView.layer.borderWidth = 0
             }
-
             self.isMenuOpen = true
             self.menuButton.setImage(UIImage(named:"close"), for: .normal)
             UIView.animate(withDuration: 0.5, animations: {
@@ -155,17 +145,34 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         menuView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
     }
     
+    // MAEK: - append Sofa Node
     func scrollViewTapped(tag: Int) {
         let imageView = scrollView.subviews[tag-1]
         imageView.layer.borderWidth = 10
         
         self.toggleMenu()
+        
+        if sofaNode != nil {
+            sofaNode?.removeFromParentNode()
+        }
 
-        let scnName = "art.scnassets/sofa00\(tag).scn"
-        let sofaWidth:[CGFloat] = [2.0,2.5,1.0,2.0]
-        sofaNode = Furniture.create(sceneName: scnName, nodeName: "sofa", width: sofaWidth[tag-1])
-        sofaNode?.position = SCNVector3(0,-1,-2)
-        sceneView.scene.rootNode.addChildNode(sofaNode!)
+        
+        let hitTestResult = sceneView.hitTest(sceneView.center, types: .existingPlaneUsingExtent)
+        if !hitTestResult.isEmpty {
+            if let hitResult = hitTestResult.first {
+                
+                let sceneName = ["sofa001","sofa002","sofa003","sofa004"]
+                let assetsName = "art.scnassets"
+                let sofaWidth:[CGFloat] = [1.2, 1.5, 0.7, 0.7]
+                sofaNode = Furniture.create(sceneName: "\(assetsName)/\(sceneName[tag-1]).scn", width: sofaWidth[tag-1])
+                sofaNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+                sofaNode?.physicsBody?.categoryBitMask = 1
+                sofaNode?.physicsBody?.restitution = 0// 弾み具合　0:弾まない 3:弾みすぎ
+                sofaNode?.physicsBody?.damping = 1  // 空気の摩擦抵抗 1でゆっくり落ちる
+                sofaNode?.position = SCNVector3(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y + Float(0.1), hitResult.worldTransform.columns.3.z)
+                sceneView.scene.rootNode.addChildNode(sofaNode!)
+            }
+        }
     }
 }
 
