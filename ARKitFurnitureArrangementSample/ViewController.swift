@@ -19,6 +19,11 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
     var isMenuOpen = true
     @IBOutlet weak var scrollView: TouchScrollView!
     
+    var recordingButto: RecordingButton!
+    var planeNodes:[PlaneNode] = []
+    
+    var sofaNode: SCNNode?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,25 +42,12 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         sceneView.scene = scene
         sceneView.autoenablesDefaultLighting = true
         
-//        let sofa001 = Furniture.create(sceneName: "art.scnassets/sofa001.scn", nodeName: "sofa", width: 2.5)
-//        sofa001.position = SCNVector3(0,-1,-1)
-//        sceneView.scene.rootNode.addChildNode(sofa001)
-
-//        let sofa002 = Furniture.create(sceneName: "art.scnassets/sofa002.scn", nodeName: "sofa", width: 2.5)
-//        sofa002.position = SCNVector3(0,-1,-1)
-//        sceneView.scene.rootNode.addChildNode(sofa002)
-
-//        let sofa003 = Furniture.create(sceneName: "art.scnassets/sofa003.scn", nodeName: "sofa", width: 1.0)
-//        sofa003.position = SCNVector3(0,-1,-1)
-//        sceneView.scene.rootNode.addChildNode(sofa003)
-
-        let sofa004 = Furniture.create(sceneName: "art.scnassets/sofa004.scn", nodeName: "sofa", width: 2.0)
-        sofa004.position = SCNVector3(0,-1,-2)
-        sceneView.scene.rootNode.addChildNode(sofa004)
         
         menuView.translatesAutoresizingMaskIntoConstraints = true
         toggleMenu()
         initializeMenu()
+        
+        self.recordingButto = RecordingButton(self) // 録画ボタン
         
     }
     
@@ -120,6 +112,10 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
                 self.menuView.frame.origin.y = UIScreen.main.bounds.height - 50
             })
         } else {
+            if sofaNode != nil {
+                sofaNode?.removeFromParentNode()
+            }
+            
             for imageView in scrollView.subviews {
                 imageView.layer.borderWidth = 0
             }
@@ -162,7 +158,14 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
     func scrollViewTapped(tag: Int) {
         let imageView = scrollView.subviews[tag-1]
         imageView.layer.borderWidth = 10
+        
         self.toggleMenu()
+
+        let scnName = "art.scnassets/sofa00\(tag).scn"
+        let sofaWidth:[CGFloat] = [2.0,2.5,1.0,2.0]
+        sofaNode = Furniture.create(sceneName: scnName, nodeName: "sofa", width: sofaWidth[tag-1])
+        sofaNode?.position = SCNVector3(0,-1,-2)
+        sceneView.scene.rootNode.addChildNode(sofaNode!)
     }
 }
 

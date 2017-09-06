@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2721D3851F5FE54B00C05BFB /* PlaneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2721D3841F5FE54B00C05BFB /* PlaneNode.swift */; };
 		277EF58D1F5E984200A6FC14 /* Furniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277EF58C1F5E984200A6FC14 /* Furniture.swift */; };
 		279BF7621F5E697E00EA9078 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279BF7611F5E697E00EA9078 /* AppDelegate.swift */; };
 		279BF7641F5E697E00EA9078 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 279BF7631F5E697E00EA9078 /* art.scnassets */; };
@@ -15,9 +16,11 @@
 		279BF76B1F5E697E00EA9078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279BF76A1F5E697E00EA9078 /* Assets.xcassets */; };
 		279BF76E1F5E697E00EA9078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279BF76C1F5E697E00EA9078 /* LaunchScreen.storyboard */; };
 		27CCDB431F5FD28400E1F74A /* TouchScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CCDB421F5FD28400E1F74A /* TouchScrollView.swift */; };
+		27CCDB451F5FE4B500E1F74A /* RecordingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CCDB441F5FE4B500E1F74A /* RecordingButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2721D3841F5FE54B00C05BFB /* PlaneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlaneNode.swift; path = ../../ARKitDiceSample/ARKitDiceSample/PlaneNode.swift; sourceTree = "<group>"; };
 		277EF58C1F5E984200A6FC14 /* Furniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Furniture.swift; sourceTree = "<group>"; };
 		279BF75E1F5E697E00EA9078 /* ARKitFurnitureArrangementSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitFurnitureArrangementSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279BF7611F5E697E00EA9078 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -28,6 +31,7 @@
 		279BF76D1F5E697E00EA9078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		279BF76F1F5E697E00EA9078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27CCDB421F5FD28400E1F74A /* TouchScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchScrollView.swift; sourceTree = "<group>"; };
+		27CCDB441F5FE4B500E1F74A /* RecordingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 		279BF7601F5E697E00EA9078 /* ARKitFurnitureArrangementSample */ = {
 			isa = PBXGroup;
 			children = (
+				2721D3841F5FE54B00C05BFB /* PlaneNode.swift */,
+				27CCDB441F5FE4B500E1F74A /* RecordingButton.swift */,
 				279BF7611F5E697E00EA9078 /* AppDelegate.swift */,
 				279BF7631F5E697E00EA9078 /* art.scnassets */,
 				279BF7651F5E697E00EA9078 /* ViewController.swift */,
@@ -146,8 +152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				279BF7661F5E697E00EA9078 /* ViewController.swift in Sources */,
+				27CCDB451F5FE4B500E1F74A /* RecordingButton.swift in Sources */,
 				27CCDB431F5FD28400E1F74A /* TouchScrollView.swift in Sources */,
 				277EF58D1F5E984200A6FC14 /* Furniture.swift in Sources */,
+				2721D3851F5FE54B00C05BFB /* PlaneNode.swift in Sources */,
 				279BF7621F5E697E00EA9078 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
