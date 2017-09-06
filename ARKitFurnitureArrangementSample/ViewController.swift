@@ -120,6 +120,10 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
                 self.menuView.frame.origin.y = UIScreen.main.bounds.height - 50
             })
         } else {
+            for imageView in scrollView.subviews {
+                imageView.layer.borderWidth = 0
+            }
+
             self.isMenuOpen = true
             self.menuButton.setImage(UIImage(named:"close"), for: .normal)
             UIView.animate(withDuration: 0.5, animations: {
@@ -132,7 +136,7 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         let imageWidth = 250
         let imageHeight = 200
         let margin = 20
-        let imageNames = ["001","002","003","004"]
+        let imageNames = ["sofa_001","sofa_002","sofa_003","sofa_004"]
         
         scrollView.contentSize = CGSize(width: (imageWidth + margin) * imageNames.count , height: imageHeight)
         scrollView.isUserInteractionEnabled = true
@@ -141,6 +145,12 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
             let imageView = UIImageView(image: UIImage(named: imageNames[i]))
             imageView.tag = i + 1
             imageView.isUserInteractionEnabled = true
+            imageView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.7)
+            imageView.layer.borderColor = UIColor.white.cgColor
+            imageView.layer.borderWidth = 0
+            imageView.layer.masksToBounds = true
+            imageView.layer.cornerRadius = 10
+ 
             let offSet = i * (imageWidth + margin)
             imageView.frame = CGRect(x: offSet, y: 0, width: imageWidth, height: imageHeight)
             scrollView.addSubview(imageView)
@@ -150,7 +160,9 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
     }
     
     func scrollViewTapped(tag: Int) {
-        print("tapped -- \(tag)")
+        let imageView = scrollView.subviews[tag-1]
+        imageView.layer.borderWidth = 10
+        self.toggleMenu()
     }
 }
 
