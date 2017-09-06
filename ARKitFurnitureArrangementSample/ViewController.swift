@@ -48,6 +48,21 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         initializeMenu()
         
         self.recordingButto = RecordingButton(self) // 録画ボタン
+        
+//        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(sender:)))
+//        rightSwipe.direction = .right
+//        view.addGestureRecognizer(rightSwipe)
+//
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(sender:)))
+//        leftSwipe.direction = .left
+//        view.addGestureRecognizer(leftSwipe)
+//
+        //let directionList:[UISwipeGestureRecognizerDirection] = [.up, .down, .right, .left]
+        for direction:UISwipeGestureRecognizerDirection in [.up, .down, .right, .left] {
+            let swipeRecognizer = UISwipeGestureRecognizer(target:self, action: #selector(ViewController.didSwipe(sender:)));
+            swipeRecognizer.direction = direction
+            view.addGestureRecognizer(swipeRecognizer)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,6 +83,27 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
+    
+    // MARK: - Swip
+    @objc func didSwipe(sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case .up:
+            sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! - 0.05)
+            print("up")
+        case .down:
+            sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! + 0.05)
+            print("down")
+        case .right:
+            sofaNode?.position = SCNVector3((sofaNode?.position.x)! + 0.05, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
+            print("right")
+        case .left:
+            sofaNode?.position = SCNVector3((sofaNode?.position.x)! - 0.05, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
+            print("left")
+        default:
+            print("unknown")
+        }
+    }
+    
     
     // MARK: - ARSCNViewDelegate
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -163,7 +199,7 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
                 
                 let sceneName = ["sofa001","sofa002","sofa003","sofa004"]
                 let assetsName = "art.scnassets"
-                let sofaWidth:[CGFloat] = [1.2, 1.5, 0.7, 0.7]
+                let sofaWidth:[CGFloat] = [1.7, 1.7, 0.8, 1.0]
                 sofaNode = Furniture.create(sceneName: "\(assetsName)/\(sceneName[tag-1]).scn", width: sofaWidth[tag-1])
                 sofaNode?.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
                 sofaNode?.physicsBody?.categoryBitMask = 1
