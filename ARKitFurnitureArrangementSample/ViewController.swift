@@ -13,6 +13,7 @@ import ARKit
 class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var controlView: UIView!
     
     @IBOutlet weak var menuButton: UIButton!
     @IBOutlet weak var menuView: UIView!
@@ -23,7 +24,8 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
     var planeNodes:[PlaneNode] = []
     
     var sofaNode: SCNNode?
-    
+    let movement:Float = 0.05
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,20 +51,7 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         
         self.recordingButto = RecordingButton(self) // 録画ボタン
         
-//        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(sender:)))
-//        rightSwipe.direction = .right
-//        view.addGestureRecognizer(rightSwipe)
-//
-//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(ViewController.didSwipe(sender:)))
-//        leftSwipe.direction = .left
-//        view.addGestureRecognizer(leftSwipe)
-//
-        //let directionList:[UISwipeGestureRecognizerDirection] = [.up, .down, .right, .left]
-        for direction:UISwipeGestureRecognizerDirection in [.up, .down, .right, .left] {
-            let swipeRecognizer = UISwipeGestureRecognizer(target:self, action: #selector(ViewController.didSwipe(sender:)));
-            swipeRecognizer.direction = direction
-            view.addGestureRecognizer(swipeRecognizer)
-        }
+        controlView.backgroundColor = UIColor(white: 0, alpha: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,27 +72,25 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-    
-    // MARK: - Swip
-    @objc func didSwipe(sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .up:
-            sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! - 0.05)
-            print("up")
-        case .down:
-            sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! + 0.05)
-            print("down")
-        case .right:
-            sofaNode?.position = SCNVector3((sofaNode?.position.x)! + 0.05, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
-            print("right")
-        case .left:
-            sofaNode?.position = SCNVector3((sofaNode?.position.x)! - 0.05, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
-            print("left")
-        default:
-            print("unknown")
-        }
+    // MARK; - Control
+    @IBAction func moveUp(_ sender: Any) {
+        sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! - movement)
     }
     
+    @IBAction func moveDown(_ sender: Any) {
+        sofaNode?.position = SCNVector3((sofaNode?.position.x)!, (sofaNode?.position.y)!, (sofaNode?.position.z)! + movement)
+    }
+
+    @IBAction func moveRight(_ sender: Any) {
+        sofaNode?.position = SCNVector3((sofaNode?.position.x)! + movement, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
+    }
+    
+    @IBAction func moveLeft(_ sender: Any) {
+        sofaNode?.position = SCNVector3((sofaNode?.position.x)! - movement, (sofaNode?.position.y)!, (sofaNode?.position.z)! )
+    }
+    @IBAction func rotation(_ sender: Any) {
+        sofaNode?.physicsBody?.applyTorque(SCNVector4(0, 10, 0, -1.0), asImpulse:false)
+    }
     
     // MARK: - ARSCNViewDelegate
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -137,17 +124,19 @@ class ViewController: UIViewController, ScrollViewDelegate, ARSCNViewDelegate {
     
     func toggleMenu() {
         if isMenuOpen {
-            self.isMenuOpen = false
-            self.menuButton.setImage(UIImage(named:"open"), for: .normal)
+            controlView.isHidden = false
+            isMenuOpen = false
+            menuButton.setImage(UIImage(named:"open"), for: .normal)
             UIView.animate(withDuration: 0.5, animations: {
                 self.menuView.frame.origin.y = UIScreen.main.bounds.height - 50
             })
         } else {
+            controlView.isHidden = true
             for imageView in scrollView.subviews {
                 imageView.layer.borderWidth = 0
             }
-            self.isMenuOpen = true
-            self.menuButton.setImage(UIImage(named:"close"), for: .normal)
+            isMenuOpen = true
+            menuButton.setImage(UIImage(named:"close"), for: .normal)
             UIView.animate(withDuration: 0.5, animations: {
                 self.menuView.frame.origin.y = UIScreen.main.bounds.height - 300
             })
